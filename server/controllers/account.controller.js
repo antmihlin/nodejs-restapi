@@ -10,6 +10,8 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
+require('../config/passport');
 
 const CRUD = require('../middlewares/CRUD.middleware');
 /*------------------Models------------------------------------*/
@@ -22,18 +24,17 @@ exports.create =  function (req, res) {
 		if (err) {
 			return res.status(500).json("Error" + err);
 		} else {
-			//passport.authenticate('local')(req, res, function () {
 			res.status(200).json('Registered');
-			//});
 		}
 	});
 };
 exports.login = function (req, res) {
-	req.login(req.user, function (err, data) {
+	req.login(req.user, {session: false}, function (err, data) {
 		if (err) {
 			return next(err);
 		}
-		return res.status(200).json({ id: req.user.id, username: req.user.username });
+		const token = jwt.sign(req.user.toJSON(), 'your_jwt_secret' ,{ expiresIn: '15m' } );
+		return res.status(200).json({ id: req.user.id, username: req.user.username, token });
 	});
 };
 exports.logout = function (req, res) {
@@ -47,14 +48,6 @@ exports.isAuthorized = function (req, res) {
 	//console.log( req.user );
 	return res.status(200).json({ id: req.user.id, username: req.user.username});
 };
-
-
-/*
-exports.create = function(req, res) {
-    // Create and Save
-	CRUD.create(req,res,AccountModel);
-};
-*/
 
 exports.findAll = function(req, res) {
     // Retrieve and return all  from the database.

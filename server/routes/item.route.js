@@ -16,7 +16,7 @@ const auth = require('../middlewares/auth.middleware');
 router.post('/', auth.isLoggedIn(), itemCtrl.create);
 
 // Retrieve all
-router.get('/', /* auth.isLoggedIn(), */ itemCtrl.findAll);
+router.get('/', /* auth.isLoggedIn(), */  passport.authenticate('jwt', {session: false}), itemCtrl.findAll);
 
 // Retrieve a single
 router.get('/:id', auth.isLoggedIn(), itemCtrl.findOne);

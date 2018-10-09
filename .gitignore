@@ -1,2 +1,4 @@
 /NodeJsRESTapi/nbproject/private/
 /nbproject/private/
+node_modules/
+.env

@@ -17,6 +17,7 @@ const mongo = require('mongodb');
 const db = require('./server/config/database');
 const MongoStore = require('connect-mongo')(expressSession);
 expressSession(app, mongo.initSessionStore);
+//require('./server/config/passport');
 // Config
 global.appRoot = path.resolve(__dirname);
 require('dotenv').config();
@@ -46,8 +47,8 @@ passport.deserializeUser(Account.deserializeUser());
 /*--------------------------------------------------------------*/
 //
 // Routes
-app.use('/account', routes.accountRoute);
-app.use('/api/item', routes.itemRoute);
+app.use('/api/v1/account', routes.accountRoute);
+app.use('/api/v1/item', routes.itemRoute);
 
 //app.disable('etag');
 
