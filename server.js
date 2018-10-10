@@ -33,6 +33,7 @@ const routes = require('./routes');
 /*--------------------------------------------------------------*/
 //
 // Parsers
+
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true, limit: '50mb', parameterLimit: 50000 }));
@@ -40,6 +41,7 @@ app.use(expressSession({ secret: 'SECRET' }));
 app.use(passport.initialize());
 app.use(passport.session({ cookie: { maxAge : 86400000 }}));
 
+app.use(express.static(path.join(__dirname, 'public')));
 passport.use(new LocalStrategy(	Account.authenticate()	));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
@@ -47,6 +49,7 @@ passport.deserializeUser(Account.deserializeUser());
 /*--------------------------------------------------------------*/
 //
 // Routes
+
 app.use('/api/v1/account', routes.accountRoute);
 app.use('/api/v1/item', routes.itemRoute);
 
