@@ -19,22 +19,9 @@ Set your DB path in MONGODB_URI variable of .env file placed in root directory.
 
 
 
-## UML diagrams
+## Diagram
 
-```mermaid
-sequenceDiagram
-Client ->> API: Request API
-API -->>  Client: Static login page
-Client ->> API:Credentials sent
-API ->> DB: Check user exists and credentials
-DB -->> API: Credentials passed
-API -->> Client: Send JWT
-Client->>API: Get endpoint with JWT header
-API->>DB:Request data
-DB-->>API: Data from collection
-API-->>Client: Json data
-
-```
+![alt text](diagramm.JPG)
 
 ## References
 
